@@ -23,7 +23,7 @@ class Eggs(commands.Cog):
     @cog_ext.cog_subcommand(base="egg", name="create", description="Eggs - Create an Egg on this server!", options=[
         interactions.utils.manage_commands.create_option("name", "The name of the Egg.", 3, True),
         interactions.utils.manage_commands.create_option("description", "A description for the Egg.", 3, True),
-        interactions.utils.manage_commands.create_option("picture", "A link to the Egg picture (ex: https://this.is-for.me/i/z1kb.jpg).")
+        interactions.utils.manage_commands.create_option("picture", "A link to the Egg picture (ex: https://this.is-for.me/i/z1kb.jpg).", 3, True)
     ])
     @commands.has_permissions(manage_guild=True)
     async def eggcreate(self, ctx: interactions.SlashContext, name: str, description: str, picture: str):
