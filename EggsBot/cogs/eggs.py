@@ -43,7 +43,7 @@ class Eggs(commands.Cog):
         await ctx.send("Egg created successfully!", hidden=True)
 
     @cog_ext.cog_subcommand(base="egg", name="delete", description="Eggs - Delete an Egg from this server.", options=[
-        interactions.utils.manage_commands.create_option("name", "The name of the Egg.")
+        interactions.utils.manage_commands.create_option("name", "The name of the Egg.", 3, True)
     ])
     @commands.has_permissions(manage_guild=True)
     async def eggdelete(self, ctx: interactions.SlashContext, name: str):
