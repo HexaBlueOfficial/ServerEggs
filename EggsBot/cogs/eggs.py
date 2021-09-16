@@ -38,7 +38,7 @@ class Eggs(commands.Cog):
             e.set_footer(text=self.embed["footer"], icon_url=self.embed["icon"])
             await ectx.send(embed=e)
         
-        self.slash.add_slash_command(eggcoro, name.lower(), f"Eggs - {description}", ctx.guild.id)
+        self.slash.add_slash_command(eggcoro, name.lower(), f"Eggs - {description}", [ctx.guild.id])
 
         await ctx.send("Egg created successfully!", hidden=True)
 
