@@ -28,7 +28,7 @@ class Eggs(commands.Cog):
     @commands.has_permissions(manage_guild=True)
     async def eggcreate(self, ctx: interactions.SlashContext, name: str, description: str, picture: str):
         async def eggcoro(ectx: interactions.SlashContext):
-            for command in self.slash.commands:
+            for command in self.slash.commands.items():
                 if command["name"] == name:
                     description = command["description"]
 
@@ -48,7 +48,7 @@ class Eggs(commands.Cog):
     ])
     @commands.has_permissions(manage_guild=True)
     async def eggdelete(self, ctx: interactions.SlashContext, name: str):
-        for key, value in self.slash.commands:
+        for key, value in self.slash.commands.items():
             if key == name:
                 cmdid = value["id"]
         
