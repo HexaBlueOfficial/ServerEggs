@@ -1,4 +1,4 @@
-from os import name
+
 import discord
 import discord_slash as interactions
 import json
