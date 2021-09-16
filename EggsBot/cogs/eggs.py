@@ -39,6 +39,7 @@ class Eggs(commands.Cog):
             await ectx.send(embed=e)
         
         self.slash.add_slash_command(eggcoro, name.lower(), f"Eggs - {description}", [ctx.guild.id])
+        await self.slash.sync_all_commands()
 
         await ctx.send("Egg created successfully!", hidden=True)
 
@@ -47,9 +48,9 @@ class Eggs(commands.Cog):
     ])
     @commands.has_permissions(manage_guild=True)
     async def eggdelete(self, ctx: interactions.SlashContext, name: str):
-        for command in self.slash.commands:
-            if command["name"] == name:
-                cmdid = command["id"]
+        for key, value in self.slash.commands:
+            if key == name:
+                cmdid = value["id"]
         
         await interactions.utils.manage_commands.remove_slash_command(self.bot.user.id, self.token["eggs"], ctx.guild.id, cmdid)
 
