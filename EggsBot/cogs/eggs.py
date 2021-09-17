@@ -28,9 +28,9 @@ class Eggs(commands.Cog):
     @commands.has_permissions(manage_guild=True)
     async def eggcreate(self, ctx: interactions.SlashContext, name: str, description: str, picture: str):
         async def eggcoro(ectx: interactions.SlashContext):
-            for command in self.slash.commands.items():
-                if command["name"] == name:
-                    description = command["description"]
+            for key, value in self.slash.commands.items():
+                if key == name:
+                    description = value["description"].lstrip("Eggs - ")
 
             e = discord.Embed(name=f"The \"{name}\" Egg", color=int(self.embed["color"], 16), description=f"**Uploaded by `{str(ctx.author)} ({ctx.author.id})`.**\n\"{description}\"")
             e.set_author(name=self.embed["author"] + "Eggs", icon_url=self.embed["icon"])
