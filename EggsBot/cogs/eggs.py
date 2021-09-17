@@ -34,7 +34,7 @@ class Eggs(commands.Cog):
                     description = desc.lstrip("Eggs - ")
                     break
 
-            e = discord.Embed(name=f"The \"{name}\" Egg", color=int(self.embed["color"], 16), description=f"**Uploaded by `{str(ctx.author)} ({ctx.author.id})`.**\n\"{description}\"")
+            e = discord.Embed(title=f"The \"{name}\" Egg", color=int(self.embed["color"], 16), description=f"**Uploaded by `{str(ctx.author)} ({ctx.author.id})`.**\n\"{description}\"")
             e.set_author(name=self.embed["author"] + "Eggs", icon_url=self.embed["icon"])
             e.set_image(url=picture)
             e.set_footer(text=self.embed["footer"], icon_url=self.embed["icon"])
