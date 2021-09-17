@@ -30,7 +30,7 @@ class Eggs(commands.Cog):
         async def eggcoro(ectx: interactions.SlashContext):
             for key, value in self.slash.commands.items():
                 if key == name:
-                    desc: str = value["description"]
+                    desc: str = value.description
                     description = desc.lstrip("Eggs - ")
                     break
 
