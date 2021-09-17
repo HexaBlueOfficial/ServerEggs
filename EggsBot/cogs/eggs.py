@@ -52,7 +52,7 @@ class Eggs(commands.Cog):
     async def eggdelete(self, ctx: interactions.SlashContext, name: str):
         for key, value in self.slash.commands.items():
             if key == name:
-                cmdid: str = value["id"]
+                cmdid: str = value.id
                 await interactions.utils.manage_commands.remove_slash_command(self.bot.user.id, self.token["eggs"], ctx.guild.id, cmdid)
                 await self.slash.sync_all_commands()
                 break

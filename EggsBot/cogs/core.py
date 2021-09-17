@@ -17,7 +17,7 @@ class Core(commands.Cog):
     
     @tasks.loop(seconds=400.0)
     async def presence(self):
-        presences = {"playing": ["with Eggs", "with you", "around"], "watching": ["Eggs", "more Eggs", "a lot of Eggs", "way too many Eggs"]}
+        presences = {"playing": ["with Eggs", "with you", "around"], "watching": ["Eggs", "more Eggs", "a lot of Eggs", "way too many Eggs", "https://seggs.tk", "https://discord.gg/DsARcGwwdM"]}
         playorwatch = random.randint(1, 2)
         if playorwatch == 1:
             presencetouse = random.randint(0, 2)
