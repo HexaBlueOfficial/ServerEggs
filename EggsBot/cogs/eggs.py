@@ -31,6 +31,7 @@ class Eggs(commands.Cog):
             for key, value in self.slash.commands.items():
                 if key == name:
                     description = value["description"].lstrip("Eggs - ")
+                    break
 
             e = discord.Embed(name=f"The \"{name}\" Egg", color=int(self.embed["color"], 16), description=f"**Uploaded by `{str(ctx.author)} ({ctx.author.id})`.**\n\"{description}\"")
             e.set_author(name=self.embed["author"] + "Eggs", icon_url=self.embed["icon"])
@@ -51,8 +52,9 @@ class Eggs(commands.Cog):
         for key, value in self.slash.commands.items():
             if key == name:
                 cmdid = value["id"]
-        
-        await interactions.utils.manage_commands.remove_slash_command(self.bot.user.id, self.token["eggs"], ctx.guild.id, cmdid)
+                await interactions.utils.manage_commands.remove_slash_command(self.bot.user.id, self.token["eggs"], ctx.guild.id, cmdid)
+                await self.slash.sync_all_commands()
+                break
 
         await ctx.send("Egg deleted successfully.", hidden=True)
 
