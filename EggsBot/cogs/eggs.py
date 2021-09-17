@@ -30,7 +30,8 @@ class Eggs(commands.Cog):
         async def eggcoro(ectx: interactions.SlashContext):
             for key, value in self.slash.commands.items():
                 if key == name:
-                    description = value["description"].lstrip("Eggs - ")
+                    desc: str = value["description"]
+                    description = desc.lstrip("Eggs - ")
                     break
 
             e = discord.Embed(name=f"The \"{name}\" Egg", color=int(self.embed["color"], 16), description=f"**Uploaded by `{str(ctx.author)} ({ctx.author.id})`.**\n\"{description}\"")
@@ -51,7 +52,7 @@ class Eggs(commands.Cog):
     async def eggdelete(self, ctx: interactions.SlashContext, name: str):
         for key, value in self.slash.commands.items():
             if key == name:
-                cmdid = value["id"]
+                cmdid: str = value["id"]
                 await interactions.utils.manage_commands.remove_slash_command(self.bot.user.id, self.token["eggs"], ctx.guild.id, cmdid)
                 await self.slash.sync_all_commands()
                 break
