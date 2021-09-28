@@ -32,4 +32,4 @@ extensions = ["cogs.core", "cogs.developer", "cogs.eggs", "cogs.utility"]
 for extension in extensions:
     bot.load_extension(extension)
 
-bot.run(token["eggs"])
+bot.run(token["eggsbeta"])
