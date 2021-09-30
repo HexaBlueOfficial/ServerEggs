@@ -29,10 +29,10 @@ class Developer(commands.Cog):
 
     @cog_ext.cog_subcommand(base="db", subcommand_group="table", name="create", description="Developer - Creates a table in the SEggsAPI DB.", base_default_permission=False, base_permissions={
         832594030264975420: [
-            interactions.utils.manage_commands.create_permission(450678229192278036, 2, True)
+            interactions.utils.manage_commands.create_permission(450678229192278036, interactions.model.SlashCommandPermissionType.USER, True)
         ],
         838718002412912661: [
-            interactions.utils.manage_commands.create_permission(450678229192278036, 2, True)
+            interactions.utils.manage_commands.create_permission(450678229192278036, interactions.model.SlashCommandPermissionType.USER, True)
         ]
     })
     async def dbtablecreate(self, ctx: interactions.SlashContext, name: str, stuff: str):
@@ -41,10 +41,10 @@ class Developer(commands.Cog):
 
     @cog_ext.cog_subcommand(base="post", name="create", description="Developer - Makes a Blog post.", base_default_permission=False, base_permissions={
         832594030264975420: [
-            interactions.utils.manage_commands.create_permission(450678229192278036, 2, True)
+            interactions.utils.manage_commands.create_permission(450678229192278036, interactions.model.SlashCommandPermissionType.USER, True)
         ],
         838718002412912661: [
-            interactions.utils.manage_commands.create_permission(450678229192278036, 2, True)
+            interactions.utils.manage_commands.create_permission(450678229192278036, interactions.model.SlashCommandPermissionType.USER, True)
         ]
     })
     async def postcreate(self, ctx: interactions.SlashContext, pid: str, title: str, jsx: str):
@@ -59,10 +59,10 @@ class Developer(commands.Cog):
 
     @cog_ext.cog_subcommand(base="post", name="delete", description="Developer - Removes a Blog post.", base_default_permission=False, base_permissions={
         832594030264975420: [
-            interactions.utils.manage_commands.create_permission(450678229192278036, 2, True)
+            interactions.utils.manage_commands.create_permission(450678229192278036, interactions.model.SlashCommandPermissionType.USER, True)
         ],
         838718002412912661: [
-            interactions.utils.manage_commands.create_permission(450678229192278036, 2, True)
+            interactions.utils.manage_commands.create_permission(450678229192278036, interactions.model.SlashCommandPermissionType.USER, True)
         ]
     })
     async def postdelete(self, ctx: interactions.SlashContext, pid: str):
