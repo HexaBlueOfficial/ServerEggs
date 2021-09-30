@@ -1,4 +1,3 @@
-import discord
 import discord_slash as interactions
 import json
 import asyncpg
@@ -27,7 +26,7 @@ class Developer(commands.Cog):
         db: asyncpg.Connection = await asyncpg.connect(self.postgres["eggs"])
         return await db.fetchrow(f'''{query}''')
 
-    @cog_ext.cog_subcommand(base="db", subcommand_group="table", name="create", description="Developer - Creates a table in the SEggsAPI DB.", base_default_permission=False, base_permissions={
+    @cog_ext.cog_slash(name="createtable", description="Developer - Creates a table in the SEggsAPI DB.", default_permission=False, permissions={
         832594030264975420: [
             interactions.utils.manage_commands.create_permission(450678229192278036, interactions.model.SlashCommandPermissionType.USER, True)
         ],
@@ -39,7 +38,7 @@ class Developer(commands.Cog):
         await self.pgexecute(f"CREATE TABLE {name} ({stuff})")
         await ctx.send("Done.", hidden=True)
 
-    @cog_ext.cog_subcommand(base="post", name="create", description="Developer - Makes a Blog post.", base_default_permission=False, base_permissions={
+    @cog_ext.cog_slash(name="post", description="Developer - Makes a Blog post.", default_permission=False, permissions={
         832594030264975420: [
             interactions.utils.manage_commands.create_permission(450678229192278036, interactions.model.SlashCommandPermissionType.USER, True)
         ],
@@ -57,7 +56,7 @@ class Developer(commands.Cog):
         
         await ctx.send("Done.", hidden=True)
 
-    @cog_ext.cog_subcommand(base="post", name="delete", description="Developer - Removes a Blog post.", base_default_permission=False, base_permissions={
+    @cog_ext.cog_slash(name="unpost", description="Developer - Removes a Blog post.", default_permission=False, permissions={
         832594030264975420: [
             interactions.utils.manage_commands.create_permission(450678229192278036, interactions.model.SlashCommandPermissionType.USER, True)
         ],
