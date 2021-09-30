@@ -3,6 +3,7 @@ import discord_slash as interactions
 import json
 import random
 import platform
+import aiohttp
 from discord_slash import cog_ext
 from discord.ext import commands, tasks
 
@@ -40,7 +41,7 @@ class Core(commands.Cog):
         e.set_author(name=self.embed["author"] + "Core", icon_url=self.embed["icon"])
         e.set_thumbnail(url=self.embed["icon"])
         e.add_field(name="Developers", value="<@450678229192278036> (Flamey#0075)")
-        e.add_field(name="Guilds", value=f"{len(self.bot.guilds)}")
+        e.add_field(name="Stats", value=f"**Servers:** {len(self.bot.guilds)}\n**Users:** {len(self.bot.users)}")
         e.add_field(name="Versions", value=f"**Server Eggs:** v{self.bot.version}\n**Python:** v{platform.python_version()}\n**discord-py-interactions:** v{interactions.__version__}", inline=False)
         e.add_field(name="Credits", value="**Hosting:** [Library of Code](https://loc.sh/discord)", inline=False)
         e.set_footer(text=self.embed["footer"], icon_url=self.embed["icon"])
@@ -57,10 +58,17 @@ class Core(commands.Cog):
 
     @cog_ext.cog_subcommand(base="info", name="api", description="Core - Gets information about the SEggs API.")
     async def infoapi(self, ctx: interactions.SlashContext):
+        async with aiohttp.ClientSession() as session:
+            async with session.get("https://seggs.tk/api") as response:
+                response = await response.json()
+                eggs = response["stats"]["eggs"]
+                posts = response["stats"]["blogposts"]
+
         e = discord.Embed(title="About the SEggs API", color=int(self.embed["color"], 16), description="The **SEggs API** gives you **e g g s**")
         e.set_author(name=self.embed["author"] + "Core", icon_url=self.embed["icon"])
         e.set_thumbnail(url=self.embed["icon"])
         e.add_field(name="Developers", value="<@450678229192278036> (Flamey#0075)")
+        e.add_field(name="Stats", value=f"**Eggs Uploaded:** {eggs}\n**Blog Posts:** {posts}")
         e.add_field(name="Versions", value=f"**SEggs API:** v1.0.0\n**Node.js:** v14\n**Next.js:** v11.1.2", inline=False)
         e.add_field(name="Credits", value="**Hosting:** [Vercel](https://vercel.com)", inline=False)
         e.set_footer(text=self.embed["footer"], icon_url=self.embed["icon"])

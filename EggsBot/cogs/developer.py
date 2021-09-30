@@ -1,7 +1,9 @@
+import discord
 import discord_slash as interactions
 import json
 import asyncpg
 import aiohttp
+import dinteractions_Paginator as paginator
 from discord_slash import cog_ext
 from discord.ext import commands
 
@@ -14,6 +16,8 @@ class Developer(commands.Cog):
             self.token = json.load(tokenfile)
         with open("./postgres.json") as postgresfile:
             self.postgres = json.load(postgresfile)
+        with open("./ServerEggs/EggsBot/assets/embed.json") as embedfile:
+            self.embed = json.load(embedfile)
 
     async def pgexecute(self, sql: str, stuff: str=None):
         db: asyncpg.Connection = await asyncpg.connect(self.postgres["eggs"])
@@ -21,32 +25,47 @@ class Developer(commands.Cog):
             await db.execute(f'''{sql}''')
         else:
             await db.execute(f'''{sql}''', stuff)
+    
+    @cog_ext.cog_slash(name="guilds", description="Developer - Gets info about all the Guilds the Bot is in.", guild_ids=[832594030264975420, 838718002412912661])
+    @commands.is_owner()
+    async def guilds(self, ctx: interactions.SlashContext):
+        async with aiohttp.ClientSession() as session:
+            async with session.get("https://seggs.tk/api/eggs") as response:
+                response = await response.json()
+                eggs: list = response["eggs"]
 
-    async def pgselect(self, query: str):
-        db: asyncpg.Connection = await asyncpg.connect(self.postgres["eggs"])
-        return await db.fetchrow(f'''{query}''')
+        embeds = []
+        guilds = []
 
-    @cog_ext.cog_slash(name="createtable", description="Developer - Creates a table in the SEggsAPI DB.", default_permission=False, permissions={
-        832594030264975420: [
-            interactions.utils.manage_commands.create_permission(450678229192278036, interactions.model.SlashCommandPermissionType.USER, True)
-        ],
-        838718002412912661: [
-            interactions.utils.manage_commands.create_permission(450678229192278036, interactions.model.SlashCommandPermissionType.USER, True)
-        ]
-    })
-    async def dbtablecreate(self, ctx: interactions.SlashContext, name: str, stuff: str):
+        index = 0
+        for guild in self.bot.guilds:
+            guilds.append(guild)
+            if index == 0:
+                continue
+            if isinstance(index / 4, int):
+                e = discord.Embed(title=f"Guilds {index / 4}", color=self.embed["color"])
+                e.set_author(name=self.embed["author"] + "Developer", icon_url=self.embed["icon"])
+                guildeggs = 0
+                for guildx in guilds:
+                    for egg in eggs:
+                        if egg["data"]["guild"] == str(guildx.id):
+                            guildeggs += 1
+                    e.add_field(name=guildx.name, value=f"**ID:** {guildx.id}\n**Owner:** {str(guildx.owner)} (`{guildx.owner.id}`)\n**Eggs:** {guildeggs}")
+                e.set_footer(text=self.embed["footer"], icon_url=self.embed["icon"])
+                embeds.append(e)
+                guilds = []
+        
+        await paginator.Paginator(self.bot, ctx, embeds)
+
+    @cog_ext.cog_slash(name="createtable", description="Developer - Creates a table in the SEggsAPI DB.", guild_ids=[832594030264975420, 838718002412912661])
+    @commands.is_owner()
+    async def createtable(self, ctx: interactions.SlashContext, name: str, stuff: str):
         await self.pgexecute(f"CREATE TABLE {name} ({stuff})")
         await ctx.send("Done.", hidden=True)
 
-    @cog_ext.cog_slash(name="post", description="Developer - Makes a Blog post.", default_permission=False, permissions={
-        832594030264975420: [
-            interactions.utils.manage_commands.create_permission(450678229192278036, interactions.model.SlashCommandPermissionType.USER, True)
-        ],
-        838718002412912661: [
-            interactions.utils.manage_commands.create_permission(450678229192278036, interactions.model.SlashCommandPermissionType.USER, True)
-        ]
-    })
-    async def postcreate(self, ctx: interactions.SlashContext, pid: str, title: str, jsx: str):
+    @cog_ext.cog_slash(name="post", description="Developer - Makes a Blog post.", guild_ids=[832594030264975420, 838718002412912661])
+    @commands.is_owner()
+    async def post(self, ctx: interactions.SlashContext, pid: str, title: str, jsx: str):
         async with aiohttp.ClientSession(headers={"auth": self.token["eggs"]}) as session:
             await session.post("https://seggs.tk/api/posts", json={
                 "id": pid,
@@ -56,15 +75,9 @@ class Developer(commands.Cog):
         
         await ctx.send("Done.", hidden=True)
 
-    @cog_ext.cog_slash(name="unpost", description="Developer - Removes a Blog post.", default_permission=False, permissions={
-        832594030264975420: [
-            interactions.utils.manage_commands.create_permission(450678229192278036, interactions.model.SlashCommandPermissionType.USER, True)
-        ],
-        838718002412912661: [
-            interactions.utils.manage_commands.create_permission(450678229192278036, interactions.model.SlashCommandPermissionType.USER, True)
-        ]
-    })
-    async def postdelete(self, ctx: interactions.SlashContext, pid: str):
+    @cog_ext.cog_slash(name="unpost", description="Developer - Removes a Blog post.", guild_ids=[832594030264975420, 838718002412912661])
+    @commands.is_owner()
+    async def unpost(self, ctx: interactions.SlashContext, pid: str):
         async with aiohttp.ClientSession(headers={"auth": self.token["eggs"]}) as session:
             await session.delete(f"https://seggs.tk/api/posts/{pid}")
  
