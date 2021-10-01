@@ -32,7 +32,7 @@ class Utility(commands.Cog):
         hours, remainder = divmod(int(delta_uptime.total_seconds()), 3600)
         minutes, seconds = divmod(remainder, 60)
         days, hours = divmod(hours, 24)
-        
+
         e = discord.Embed(title="Uptime", color=int(self.embed["color"], 16), description=f"The Bot has been online for:\n{days} days, {hours} hours, {minutes} minutes and {seconds} seconds.")
         e.set_author(name=self.embed["author"] + "Utility", icon_url=self.embed["icon"])
         e.add_field(name="Last Restart", value="The Bot was last restarted on {} UTC".format(self.bot.launch_time.strftime("%A, %d %B %Y at %H:%M")), inline=False)
