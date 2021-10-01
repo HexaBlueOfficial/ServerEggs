@@ -12,7 +12,7 @@ with open("./ServerEggs/EggsBot/assets/embed.json") as embedfile:
 bot = commands.Bot(command_prefix=commands.when_mentioned, help_command=None, intents=discord.Intents.all())
 slash = interactions.SlashCommand(bot, sync_commands=True, sync_on_cog_reload=True)
 
-bot.version = "2.0.0"
+bot.version = "3.0.0a"
 
 @bot.event
 async def on_ready():
