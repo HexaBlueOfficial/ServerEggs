@@ -62,8 +62,8 @@ class Eggs(commands.Cog):
                 botver = egg["data"]["botver"]
                 desc = egg["desc"]
                 pic = egg["pic"]
-        
-        e = discord.Embed(title=f"The \"{name}\" Egg", color=int(self.embed["color"], 16), description=f"**Uploaded by `{str(user)} ({user.id})` from `{guild.name}`.**\n\"{desc}\"")
+
+        e = discord.Embed(title=f"The \"{name}\" Egg", color=int(self.embed["color"], 16), description=f"**Uploaded by `{str(user)} ({user.id})` from `{guild.name}` with `{botver}`.**\n\"{desc}\"")
         e.set_author(name=self.embed["author"] + "Eggs", icon_url=self.embed["icon"])
         e.set_image(url=pic)
         e.set_footer(text=self.embed["footer"], icon_url=self.embed["icon"])
@@ -115,6 +115,58 @@ class Eggs(commands.Cog):
             await session.delete(f"https://seggs.tk/api/eggs/{name}")
 
         await ctx.send("Egg deleted successfully.", hidden=True)
+
+    # Hardboiled- sorry, I meant hardcoded Eggs.
+
+    @cog_ext.cog_slash(name="seggs", description="Eggs - The original Egg.")
+    async def seggs(self, ctx: interactions.SlashContext):
+        await self.template(
+            ctx,
+            "seggs",
+            self.bot.get_user(450678229192278036),
+            self.bot.get_guild(832594030264975420),
+            "https://seggs.tk/images/seggs.png"
+        )
+
+    @cog_ext.cog_slash(name="hardboiled", description="Eggs - Classic hardboiled Eggs.")
+    async def hardboiled(self, ctx: interactions.SlashContext):
+        await self.template(
+            ctx,
+            "hardboiled",
+            self.bot.get_user(450678229192278036),
+            self.bot.get_guild(832594030264975420),
+            "https://nomnompaleo.com/wp-content/uploads/2011/07/Perfect-Hard-Boiled-Eggs.jpg"
+        )
+
+    @cog_ext.cog_slash(name="softboiled", description="Eggs - Classic softboiled Eggs.")
+    async def softboiled(self, ctx: interactions.SlashContext):
+        await self.template(
+            ctx,
+            "softboiled",
+            self.bot.get_user(450678229192278036),
+            self.bot.get_guild(832594030264975420),
+            "https://www.yeprecipes.com/data/thumbnails/15/soft-boiled-egg2.jpg"
+        )
+
+    @cog_ext.cog_slash(name="scrambled", description="Eggs - Classic scrambled Eggs.")
+    async def scrambled(self, ctx: interactions.SlashContext):
+        await self.template(
+            ctx,
+            "scrambled",
+            self.bot.get_user(450678229192278036),
+            self.bot.get_guild(832594030264975420),
+            "https://southernbite.com/wp-content/uploads/2021/05/Perfect-Scrambled-Eggs-3.jpg"
+        )
+
+    @cog_ext.cog_slash(name="fried", description="Eggs - Classic fried Eggs.")
+    async def fried(self, ctx: interactions.SlashContext):
+        await self.template(
+            ctx,
+            "fried",
+            self.bot.get_user(450678229192278036),
+            self.bot.get_guild(832594030264975420),
+            "https://www.rainbowcounselling.org.uk/wp-content/uploads/2020/04/fried-eggs-feature.jpg"
+        )
 
 def setup(bot: commands.Bot):
     bot.add_cog(Eggs(bot))

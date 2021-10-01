@@ -12,7 +12,7 @@ with open("./ServerEggs/EggsBot/assets/embed.json") as embedfile:
 bot = commands.Bot(command_prefix=commands.when_mentioned, help_command=None, intents=discord.Intents.all())
 slash = interactions.SlashCommand(bot, sync_commands=True, sync_on_cog_reload=True)
 
-bot.version = "2.0.0b"
+bot.version = "2.0.0"
 
 @bot.event
 async def on_ready():
@@ -32,4 +32,4 @@ extensions = ["cogs.core", "cogs.developer", "cogs.eggs", "cogs.utility"]
 for extension in extensions:
     bot.load_extension(extension)
 
-bot.run(token["eggsbeta"])
+bot.run(token["eggs"])
