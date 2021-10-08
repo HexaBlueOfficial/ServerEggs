@@ -33,7 +33,7 @@ class Eggs(commands.Cog):
     @commands.Cog.listener()
     async def on_ready(self):
         async with aiohttp.ClientSession() as session:
-            async with session.get("https://seggs.tk/api/eggs") as response:
+            async with session.get("https://eggsapi.xyz/api/eggs") as response:
                 eggs = await response.json()
 
         for egg in eggs["eggs"]:
@@ -54,18 +54,18 @@ class Eggs(commands.Cog):
     @commands.Cog.listener()
     async def on_guild_remove(self, guild: discord.Guild):
         async with aiohttp.ClientSession() as session:
-            async with session.get("https://seggs.tk/api/eggs") as response:
+            async with session.get("https://eggsapi.xyz/api/eggs") as response:
                 eggs = await response.json()
         
                 for egg in eggs["eggs"]:
                     if egg["data"]["guild"] == str(guild.id):
                         name = egg["name"]
-                        await session.delete(f"https://seggs.tk/api/eggs/{name}")
+                        await session.delete(f"https://eggsapi.xyz/api/eggs/{name}")
 
     @cog_ext.cog_subcommand(base="egg", name="random", description="Eggs - Gets a random Egg from the SEggs API.")
     async def eggrandom(self, ctx: interactions.SlashContext):
         async with aiohttp.ClientSession() as session:
-            async with session.get("https://seggs.tk/api/eggs/random") as response:
+            async with session.get("https://eggsapi.xyz/api/eggs/random") as response:
                 egg = await response.json()
                 name = egg["name"]
                 user = await self.bot.fetch_user(int(egg["data"]["uploader"]))
@@ -88,7 +88,7 @@ class Eggs(commands.Cog):
     @commands.has_permissions(manage_guild=True)
     async def eggcreate(self, ctx: interactions.SlashContext, name: str, description: str, picture: str):
         async with aiohttp.ClientSession(headers={"auth": self.token["eggs"]}) as session:
-            async with session.post("https://seggs.tk/api/eggs", json={
+            async with session.post("https://eggsapi.xyz/api/eggs", json={
                 "name": name,
                 "data": {
                     "uploader": ctx.author.id,
@@ -123,7 +123,7 @@ class Eggs(commands.Cog):
                 break
 
         async with aiohttp.ClientSession(headers={"auth": self.token["eggs"]}) as session:
-            await session.delete(f"https://seggs.tk/api/eggs/{name}")
+            await session.delete(f"https://eggsapi.xyz/api/eggs/{name}")
 
         await ctx.send("Egg deleted successfully.", hidden=True)
 
@@ -136,7 +136,7 @@ class Eggs(commands.Cog):
             "seggs",
             self.bot.get_user(450678229192278036),
             self.bot.get_guild(832594030264975420),
-            "https://seggs.tk/images/seggs.png"
+            "https://eggs.hexa.blue/images/seggs.png"
         )
 
     @cog_ext.cog_slash(name="hardboiled", description="Eggs - Classic hardboiled Eggs.")

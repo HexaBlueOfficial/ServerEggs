@@ -30,7 +30,7 @@ class Developer(commands.Cog):
     @commands.is_owner()
     async def guilds(self, ctx: interactions.SlashContext):
         async with aiohttp.ClientSession() as session:
-            async with session.get("https://seggs.tk/api/eggs") as response:
+            async with session.get("https://eggsapi.xyz/api/eggs") as response:
                 response = await response.json()
                 eggs: list = response["eggs"]
 
@@ -67,7 +67,7 @@ class Developer(commands.Cog):
     @commands.is_owner()
     async def post(self, ctx: interactions.SlashContext, pid: str, title: str, jsx: str):
         async with aiohttp.ClientSession(headers={"auth": self.token["eggs"]}) as session:
-            await session.post("https://seggs.tk/api/posts", json={
+            await session.post("https://eggsapi.xyz/api/posts", json={
                 "id": pid,
                 "title": title,
                 "jsx": jsx
@@ -79,7 +79,7 @@ class Developer(commands.Cog):
     @commands.is_owner()
     async def unpost(self, ctx: interactions.SlashContext, pid: str):
         async with aiohttp.ClientSession(headers={"auth": self.token["eggs"]}) as session:
-            await session.delete(f"https://seggs.tk/api/posts/{pid}")
+            await session.delete(f"https://eggsapi.xyz/api/posts/{pid}")
  
         await ctx.send("Done.", hidden=True)
 

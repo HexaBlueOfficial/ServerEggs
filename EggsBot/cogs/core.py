@@ -18,7 +18,7 @@ class Core(commands.Cog):
 
     @tasks.loop(seconds=400.0)
     async def presence(self):
-        presences = {"playing": ["with Eggs", "with you", "around"], "watching": ["Eggs", "more Eggs", "a lot of Eggs", "way too many Eggs", "https://seggs.tk", "https://discord.gg/DsARcGwwdM"]}
+        presences = {"playing": ["with Eggs", "with you", "around"], "watching": ["Eggs", "more Eggs", "a lot of Eggs", "way too many Eggs", "https://eggs.hexa.blue/", "https://hexa.blue/", "https://discord.gg/DsARcGwwdM"]}
         playorwatch = random.randint(1, 2)
         if playorwatch == 1:
             presencetouse = random.randint(0, 2)
@@ -49,8 +49,8 @@ class Core(commands.Cog):
         components = [
             interactions.utils.manage_components.create_actionrow(
                 interactions.utils.manage_components.create_button(interactions.utils.manage_components.ButtonStyle.URL, "Invite", None, None, "https://discord.com/api/oauth2/authorize?client_id=886686500845138041&permissions=274945361920&scope=bot%20applications.commands"),
-                interactions.utils.manage_components.create_button(interactions.utils.manage_components.ButtonStyle.URL, "Website", None, None, "https://seggs.tk/"),
-                interactions.utils.manage_components.create_button(interactions.utils.manage_components.ButtonStyle.URL, "Docs", None, None, "https://seggs.tk/docs"),
+                interactions.utils.manage_components.create_button(interactions.utils.manage_components.ButtonStyle.URL, "Website", None, None, "https://eggs.hexa.blue/"),
+                interactions.utils.manage_components.create_button(interactions.utils.manage_components.ButtonStyle.URL, "Docs", None, None, "https://eggs.hexa.blue/docs"),
                 interactions.utils.manage_components.create_button(interactions.utils.manage_components.ButtonStyle.URL, "Support", None, None, "https://discord.gg/DsARcGwwdM")
             )
         ]
@@ -59,17 +59,18 @@ class Core(commands.Cog):
     @cog_ext.cog_subcommand(base="info", name="api", description="Core - Gets information about the SEggs API.")
     async def infoapi(self, ctx: interactions.SlashContext):
         async with aiohttp.ClientSession() as session:
-            async with session.get("https://seggs.tk/api") as response:
+            async with session.get("https://eggsapi.xyz/api") as response:
                 response = await response.json()
+                version = response["version"]
                 eggs = response["stats"]["eggs"]
                 posts = response["stats"]["blogposts"]
 
-        e = discord.Embed(title="About the SEggs API", color=int(self.embed["color"], 16), description="The **SEggs API** gives you **e g g s**")
+        e = discord.Embed(title="About the EggsAPI", color=int(self.embed["color"], 16), description="The **Eggs API** gives you **e g g s**, and it is powered by this Bot.")
         e.set_author(name=self.embed["author"] + "Core", icon_url=self.embed["icon"])
         e.set_thumbnail(url=self.embed["icon"])
         e.add_field(name="Developers", value="<@450678229192278036> (Flamey#0075)")
         e.add_field(name="Stats", value=f"**Eggs Uploaded:** {eggs}\n**Blog Posts:** {posts}")
-        e.add_field(name="Versions", value=f"**SEggs API:** v1.0.0\n**Node.js:** v14\n**Next.js:** v11.1.2", inline=False)
+        e.add_field(name="Versions", value=f"**EggsAPI:** v{version}\n**Node.js:** v14\n**Next.js:** v11.1.2", inline=False)
         e.add_field(name="Credits", value="**Hosting:** [Vercel](https://vercel.com)", inline=False)
         e.set_footer(text=self.embed["footer"], icon_url=self.embed["icon"])
 
