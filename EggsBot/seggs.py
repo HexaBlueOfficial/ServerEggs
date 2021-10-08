@@ -28,7 +28,7 @@ async def on_slash_command_error(ctx: typing.Union[interactions.SlashContext, in
 
     raise ex
 
-extensions = ["cogs.core", "cogs.developer", "cogs.eggs", "cogs.promo", "cogs.utility"]
+extensions = ["cogs.core", "cogs.developer", "cogs.eggs", "cogs.promo", "cogs.utility", "jishaku"]
 for extension in extensions:
     bot.load_extension(extension)
 

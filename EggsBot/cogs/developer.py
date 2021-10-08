@@ -83,13 +83,5 @@ class Developer(commands.Cog):
  
         await ctx.send("Done.", hidden=True)
 
-    @cog_ext.cog_slash(name="eval", description="Developer - Runs code.", guild_ids=[832594030264975420, 838718002412912661])
-    @commands.is_owner()
-    async def eval(self, ctx: interactions.ComponentContext, code: str):
-        run = eval(code, {"ctx": ctx, "discord": discord, "interactions": interactions, "aiohttp": aiohttp, "paginator": paginator})
-
-        if not isinstance(run, interactions.model.SlashMessage):
-            await ctx.send("No message returned, operation successful.")
-
 def setup(bot: commands.Bot):
     bot.add_cog(Developer(bot))
