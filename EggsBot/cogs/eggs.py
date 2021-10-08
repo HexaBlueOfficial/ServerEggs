@@ -121,12 +121,13 @@ class Eggs(commands.Cog):
 
         cmds = await interactions.utils.manage_commands.get_all_commands(self.bot.user.id, self.token["eggs"], ctx.guild.id)
         
-        for key, value in cmds:
-            if key == name:
-                cmdid: str = value["id"]
-                await interactions.utils.manage_commands.remove_slash_command(self.bot.user.id, self.token["eggs"], ctx.guild.id, cmdid)
-                await self.slash.sync_all_commands(delete_from_unused_guilds=True)
-                break
+        for cmd in cmds:
+            for key, value in cmd:
+                if key == name:
+                    cmdid: str = value["id"]
+                    await interactions.utils.manage_commands.remove_slash_command(self.bot.user.id, self.token["eggs"], ctx.guild.id, cmdid)
+                    await self.slash.sync_all_commands(delete_from_unused_guilds=True)
+                    break
 
         async with aiohttp.ClientSession(headers={"auth": self.token["eggs"]}) as session:
             await session.delete(f"https://eggsapi.xyz/api/eggs/{name}")
