@@ -87,6 +87,8 @@ class Eggs(commands.Cog):
     ])
     @commands.has_permissions(manage_guild=True)
     async def eggcreate(self, ctx: interactions.SlashContext, name: str, description: str, picture: str):
+        await ctx.defer(hidden=True)
+
         async with aiohttp.ClientSession(headers={"auth": self.token["eggs"]}) as session:
             async with session.post("https://eggsapi.xyz/api/eggs", json={
                 "name": name,
@@ -115,6 +117,8 @@ class Eggs(commands.Cog):
     ])
     @commands.has_permissions(manage_guild=True)
     async def eggdelete(self, ctx: interactions.SlashContext, name: str):
+        await ctx.defer(hidden=True)
+
         for key, value in self.slash.commands.items():
             if key == name:
                 cmdid: str = value.id

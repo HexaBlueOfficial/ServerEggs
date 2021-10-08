@@ -66,6 +66,8 @@ class Developer(commands.Cog):
     @cog_ext.cog_slash(name="post", description="Developer - Makes a Blog post.", guild_ids=[832594030264975420, 838718002412912661])
     @commands.is_owner()
     async def post(self, ctx: interactions.SlashContext, pid: str, title: str, jsx: str):
+        await ctx.defer(hidden=True)
+
         async with aiohttp.ClientSession(headers={"auth": self.token["eggs"]}) as session:
             await session.post("https://eggsapi.xyz/api/posts", json={
                 "id": pid,
@@ -78,6 +80,8 @@ class Developer(commands.Cog):
     @cog_ext.cog_slash(name="unpost", description="Developer - Removes a Blog post.", guild_ids=[832594030264975420, 838718002412912661])
     @commands.is_owner()
     async def unpost(self, ctx: interactions.SlashContext, pid: str):
+        await ctx.defer(hidden=True)
+
         async with aiohttp.ClientSession(headers={"auth": self.token["eggs"]}) as session:
             await session.delete(f"https://eggsapi.xyz/api/posts/{pid}")
  
