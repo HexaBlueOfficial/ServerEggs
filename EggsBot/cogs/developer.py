@@ -18,13 +18,6 @@ class Developer(commands.Cog):
             self.postgres = json.load(postgresfile)
         with open("./ServerEggs/EggsBot/assets/embed.json") as embedfile:
             self.embed = json.load(embedfile)
-
-    async def pgexecute(self, sql: str, stuff: str=None):
-        db: asyncpg.Connection = await asyncpg.connect(self.postgres["eggs"])
-        if stuff is None:
-            await db.execute(f'''{sql}''')
-        else:
-            await db.execute(f'''{sql}''', stuff)
     
     @cog_ext.cog_slash(name="guilds", description="Developer - Gets info about all the Guilds the Bot is in.", guild_ids=[832594030264975420, 838718002412912661])
     @commands.is_owner()
@@ -56,36 +49,6 @@ class Developer(commands.Cog):
                 guilds = []
         
         await paginator.Paginator(self.bot, ctx, embeds)
-
-    @cog_ext.cog_slash(name="createtable", description="Developer - Creates a table in the SEggsAPI DB.", guild_ids=[832594030264975420, 838718002412912661])
-    @commands.is_owner()
-    async def createtable(self, ctx: interactions.SlashContext, name: str, stuff: str):
-        await self.pgexecute(f"CREATE TABLE {name} ({stuff})")
-        await ctx.send("Done.", hidden=True)
-
-    @cog_ext.cog_slash(name="post", description="Developer - Makes a Blog post.", guild_ids=[832594030264975420, 838718002412912661])
-    @commands.is_owner()
-    async def post(self, ctx: interactions.SlashContext, pid: str, title: str, jsx: str):
-        await ctx.defer(hidden=True)
-
-        async with aiohttp.ClientSession(headers={"auth": self.token["eggs"]}) as session:
-            await session.post("https://eggsapi.xyz/api/posts", json={
-                "id": pid,
-                "title": title,
-                "jsx": jsx
-            })
-        
-        await ctx.send("Done.", hidden=True)
-
-    @cog_ext.cog_slash(name="unpost", description="Developer - Removes a Blog post.", guild_ids=[832594030264975420, 838718002412912661])
-    @commands.is_owner()
-    async def unpost(self, ctx: interactions.SlashContext, pid: str):
-        await ctx.defer(hidden=True)
-
-        async with aiohttp.ClientSession(headers={"auth": self.token["eggs"]}) as session:
-            await session.delete(f"https://eggsapi.xyz/api/posts/{pid}")
- 
-        await ctx.send("Done.", hidden=True)
 
 def setup(bot: commands.Bot):
     bot.add_cog(Developer(bot))

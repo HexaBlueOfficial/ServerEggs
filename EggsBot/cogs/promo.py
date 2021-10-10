@@ -16,7 +16,10 @@ class Promo(commands.Cog):
     @cog_ext.cog_slash(name="featured", description="Promo - Featured Servers that use Server Eggs.")
     async def featured(self, ctx: interactions.SlashContext):
         e1 = discord.Embed(title="Featured Servers", description="Featured Servers that use Server Eggs.")
-        e2 = discord.Embed(title="Phoenix Community", description="Do you like gaming, especially GTA and Minecraft? Do you like having fun and making friends? If yes, Phoenix Community is for you!\nTalk about your favourite game, and do a little trolling in the #memes-n-shitposting channel.\nThe server has a custom \"Phoenix\" Bot written in Python (like Server Eggs!), which lets you add roles to yourself, jokingly \"kill\" other members, \"scan\" fake barcodes made of `I`s and `l`s, and more!")
+        e2 = discord.Embed(title="Phoenix Community", description="Do you like gaming, especially GTA and Minecraft? Do you like having fun and making friends? If yes, Phoenix Community is for you!\n\nTalk about your favourite game, Minecraft mods, modpacks, worlds, and do a little trolling in the #memes-n-shitposting channel.\n\nThe server has a custom \"Phoenix\" Bot written in Python (like Server Eggs!), which lets you add roles to yourself, jokingly \"kill\" other members, \"scan\" fake barcodes made of `I`s and `l`s, and more!")
+
+        e2.set_thumbnail(url="https://eggs.hexa.blue/images/phoenix.png")
+        e2.add_field(name="Join now!", value="https://discord.gg/T4dDDXpRgT")
 
         embeds = [e1, e2]
 

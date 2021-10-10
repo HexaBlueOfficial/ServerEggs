@@ -92,11 +92,9 @@ class Eggs(commands.Cog):
         async with aiohttp.ClientSession(headers={"auth": self.token["eggs"]}) as session:
             async with session.post("https://eggsapi.xyz/api/eggs", json={
                 "name": name,
-                "data": {
-                    "uploader": ctx.author.id,
-                    "guild": ctx.guild.id,
-                    "botver": self.bot.version
-                },
+                "uploader": ctx.author.id,
+                "guild": ctx.guild.id,
+                "botver": self.bot.version,
                 "desc": description,
                 "pic": picture
             }) as response:
