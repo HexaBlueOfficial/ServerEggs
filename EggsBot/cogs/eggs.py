@@ -68,9 +68,9 @@ class Eggs(commands.Cog):
             async with session.get("https://eggsapi.xyz/api/eggs/random") as response:
                 egg = await response.json()
                 name = egg["name"]
-                user = await self.bot.fetch_user(int(egg["data"]["uploader"]))
-                guild = self.bot.get_guild(int(egg["data"]["guild"]))
-                botver = egg["data"]["botver"]
+                user = await self.bot.fetch_user(int(egg["uploader"]))
+                guild = self.bot.get_guild(int(egg["guild"]))
+                botver = egg["botver"]
                 desc = egg["desc"]
                 pic = egg["pic"]
 

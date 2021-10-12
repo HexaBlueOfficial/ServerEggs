@@ -30,9 +30,9 @@ class Promo(commands.Cog):
 
         await paginator.Paginator(self.bot, ctx, embeds)
 
-    @cog_ext.cog_slash(name="hexacode", description="Promo - Need more Bot power? Check out HexaCode's full portfolio!")
-    async def hexacode(self, ctx: interactions.SlashContext):
-        e1 = discord.Embed(title="HexaCode", description="Check out HexaCode's Bots!")
+    @cog_ext.cog_slash(name="hexablue", description="Promo - Need more Bot power? Check out HexaBlue's full portfolio!")
+    async def hexablue(self, ctx: interactions.SlashContext):
+        e1 = discord.Embed(title="HexaBlue", description="Check out HexaBlue's Bots!")
 
         e2 = discord.Embed(title="mkbot", description="Can't code, but want a custom Bot anyway? With mkbot, you can create your own Bot for free (with a Premium version that gives additional features)!")
         e2.add_field(name="Invite", value="Coming soon!", inline=False)
