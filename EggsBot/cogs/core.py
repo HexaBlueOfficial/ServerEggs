@@ -62,14 +62,13 @@ class Core(commands.Cog):
             async with session.get("https://eggsapi.xyz/api") as response:
                 response = await response.json()
                 version = response["version"]
-                eggs = response["stats"]["eggs"]
-                posts = response["stats"]["blogposts"]
+                eggs = response["eggs"]
 
         e = discord.Embed(title="About the EggsAPI", color=int(self.embed["color"], 16), description="The **Eggs API** gives you **e g g s**, and it is powered by this Bot.")
         e.set_author(name=self.embed["author"] + "Core", icon_url=self.embed["icon"])
         e.set_thumbnail(url=self.embed["icon"])
         e.add_field(name="Developers", value="<@450678229192278036> (Flamey#0075)")
-        e.add_field(name="Stats", value=f"**Eggs Uploaded:** {eggs}\n**Blog Posts:** {posts}")
+        e.add_field(name="Stats", value=f"**Eggs Uploaded:** {eggs}")
         e.add_field(name="Versions", value=f"**EggsAPI:** v{version}\n**Node.js:** v14\n**Next.js:** v11.1.2", inline=False)
         e.add_field(name="Credits", value="**Hosting:** [Vercel](https://vercel.com)", inline=False)
         e.set_footer(text=self.embed["footer"], icon_url=self.embed["icon"])

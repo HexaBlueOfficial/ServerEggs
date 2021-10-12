@@ -41,13 +41,13 @@ class Eggs(commands.Cog):
                 await self.template(
                     ectx,
                     egg["name"],
-                    await self.bot.fetch_user(int(egg["data"]["uploader"])),
-                    self.bot.get_guild(int(egg["data"]["guild"])),
+                    await self.bot.fetch_user(int(egg["uploader"])),
+                    self.bot.get_guild(int(egg["guild"])),
                     egg["pic"]
                 )
 
             description = egg["desc"]
-            self.slash.add_slash_command(eggcoro, egg["name"], f"Eggs - {description}", [int(egg["data"]["guild"])])
+            self.slash.add_slash_command(eggcoro, egg["name"], f"Eggs - {description}", [int(egg["guild"])])
 
         await self.slash.sync_all_commands()
     
@@ -58,7 +58,7 @@ class Eggs(commands.Cog):
                 eggs = await response.json()
         
                 for egg in eggs["eggs"]:
-                    if egg["data"]["guild"] == str(guild.id):
+                    if egg["guild"] == str(guild.id):
                         name = egg["name"]
                         await session.delete(f"https://eggsapi.xyz/api/eggs/{name}")
 

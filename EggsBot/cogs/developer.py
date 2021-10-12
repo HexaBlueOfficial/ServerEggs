@@ -41,7 +41,7 @@ class Developer(commands.Cog):
                 guildeggs = 0
                 for guildx in guilds:
                     for egg in eggs:
-                        if egg["data"]["guild"] == str(guildx.id):
+                        if egg["guild"] == str(guildx.id):
                             guildeggs += 1
                     e.add_field(name=guildx.name, value=f"**ID:** {guildx.id}\n**Owner:** {str(guildx.owner)} (`{guildx.owner.id}`)\n**Eggs:** {guildeggs}")
                 e.set_footer(text=self.embed["footer"], icon_url=self.embed["icon"])
