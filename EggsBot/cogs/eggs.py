@@ -34,20 +34,20 @@ class Eggs(commands.Cog):
     async def on_ready(self):
         async with aiohttp.ClientSession() as session:
             async with session.get("https://eggsapi.xyz/api/eggs") as response:
-                eggs = await response.json()
+                eggs: list = await response.json()
 
         for egg in eggs:
             async def eggcoro(ectx: interactions.SlashContext):
                 await self.template(
                     ectx,
                     egg["name"],
-                    await self.bot.fetch_user(int(egg["uploader"])),
-                    self.bot.get_guild(int(egg["guild"])),
+                    await self.bot.fetch_user(egg["uploader"]),
+                    self.bot.get_guild(egg["guild"]),
                     egg["pic"]
                 )
 
             description = egg["desc"]
-            self.slash.add_slash_command(eggcoro, egg["name"], f"Eggs - {description}", [int(egg["guild"])])
+            self.slash.add_slash_command(eggcoro, egg["name"], f"Eggs - {description}", [egg["guild"]])
 
         await self.slash.sync_all_commands()
     
@@ -55,10 +55,10 @@ class Eggs(commands.Cog):
     async def on_guild_remove(self, guild: discord.Guild):
         async with aiohttp.ClientSession() as session:
             async with session.get("https://eggsapi.xyz/api/eggs") as response:
-                eggs = await response.json()
+                eggs: list = await response.json()
         
                 for egg in eggs:
-                    if egg["guild"] == str(guild.id):
+                    if egg["guild"] == guild.id:
                         name = egg["name"]
                         await session.delete(f"https://eggsapi.xyz/api/eggs/{name}")
 
@@ -68,8 +68,8 @@ class Eggs(commands.Cog):
             async with session.get("https://eggsapi.xyz/api/eggs/random") as response:
                 egg = await response.json()
                 name = egg["name"]
-                user = await self.bot.fetch_user(int(egg["uploader"]))
-                guild = self.bot.get_guild(int(egg["guild"]))
+                user = await self.bot.fetch_user(egg["uploader"])
+                guild = self.bot.get_guild(egg["guild"])
                 botver = egg["botver"]
                 desc = egg["desc"]
                 pic = egg["pic"]
