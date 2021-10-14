@@ -90,17 +90,14 @@ class Eggs(commands.Cog):
         await ctx.defer(hidden=True)
 
         async with aiohttp.ClientSession(headers={"auth": self.token["eggs"]}) as session:
-            async with session.post("https://eggsapi.xyz/api/eggs", json={
+            await session.post("https://eggsapi.xyz/api/eggs", json={
                 "name": name,
                 "uploader": ctx.author.id,
                 "guild": ctx.guild.id,
                 "botver": self.bot.version,
                 "desc": description,
                 "pic": picture
-            }) as response:
-                if response.status == 400:
-                    await ctx.send("It appears an Egg with that name already exists.", hidden=True)
-                    return
+            })
 
         async def eggcoro(ectx: interactions.SlashContext):
             await self.template(ectx, name, ctx.author, ctx.guild, picture)
