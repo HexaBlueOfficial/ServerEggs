@@ -25,7 +25,7 @@ class Developer(commands.Cog):
         async with aiohttp.ClientSession() as session:
             async with session.get("https://eggsapi.xyz/api/eggs") as response:
                 response = await response.json()
-                eggs: list = response["eggs"]
+                eggs: list = response
 
         embeds = []
         guilds = []

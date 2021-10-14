@@ -36,7 +36,7 @@ class Eggs(commands.Cog):
             async with session.get("https://eggsapi.xyz/api/eggs") as response:
                 eggs = await response.json()
 
-        for egg in eggs["eggs"]:
+        for egg in eggs:
             async def eggcoro(ectx: interactions.SlashContext):
                 await self.template(
                     ectx,
@@ -57,7 +57,7 @@ class Eggs(commands.Cog):
             async with session.get("https://eggsapi.xyz/api/eggs") as response:
                 eggs = await response.json()
         
-                for egg in eggs["eggs"]:
+                for egg in eggs:
                     if egg["guild"] == str(guild.id):
                         name = egg["name"]
                         await session.delete(f"https://eggsapi.xyz/api/eggs/{name}")
@@ -92,8 +92,8 @@ class Eggs(commands.Cog):
         async with aiohttp.ClientSession(headers={"auth": self.token["eggs"]}) as session:
             async with session.post("https://eggsapi.xyz/api/eggs", json={
                 "name": name,
-                "uploader": str(ctx.author.id),
-                "guild": str(ctx.guild.id),
+                "uploader": ctx.author.id,
+                "guild": ctx.guild.id,
                 "botver": self.bot.version,
                 "desc": description,
                 "pic": picture
