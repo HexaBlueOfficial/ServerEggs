@@ -9,7 +9,7 @@ with open("./token.json") as tokenfile:
 with open("./ServerEggs/EggsBot/assets/embed.json") as embedfile:
     embed = json.load(embedfile)
 
-bot = commands.Bot(command_prefix=commands.when_mentioned, help_command=None, intents=discord.Intents.all())
+bot = commands.Bot(command_prefix=commands.when_mentioned, help_command=None, intents=discord.Intents.default())
 slash = interactions.SlashCommand(bot, sync_commands=True, sync_on_cog_reload=True)
 
 bot.version = "2.0.0"

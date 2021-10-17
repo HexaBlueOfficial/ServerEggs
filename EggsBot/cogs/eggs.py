@@ -17,14 +17,14 @@ class Eggs(commands.Cog):
         with open("./ServerEggs/EggsBot/assets/embed.json") as embedfile:
             self.embed = json.load(embedfile)
 
-    async def template(self, ectx: interactions.SlashContext, name: str, author: discord.User, guild: discord.Guild, picture: str):
+    async def template(self, ectx: interactions.SlashContext, name: str, guild: discord.Guild, picture: str):
         for key, value in self.slash.commands.items():
             if key == name:
                 desc: str = value.description
                 description = desc.lstrip("Eggs - ")
                 break
 
-        e = discord.Embed(title=f"The \"{name}\" Egg", color=int(self.embed["color"], 16), description=f"**Uploaded by `{str(author)} ({author.id})` from `{guild.name}`.**\n\"{description}\"")
+        e = discord.Embed(title=f"The \"{name}\" Egg", color=int(self.embed["color"], 16), description=f"**Uploaded from `{guild.name}`.**\n\"{description}\"")
         e.set_author(name=self.embed["author"] + "Eggs", icon_url=self.embed["icon"])
         e.set_image(url=picture)
         e.set_footer(text=self.embed["footer"], icon_url=self.embed["icon"])
@@ -41,13 +41,12 @@ class Eggs(commands.Cog):
                 await self.template(
                     ectx,
                     egg["name"],
-                    await self.bot.fetch_user(egg["uploader"]),
-                    self.bot.get_guild(egg["guild"]),
+                    int(egg["guild"]),
                     egg["pic"]
                 )
 
             description = egg["desc"]
-            self.slash.add_slash_command(eggcoro, egg["name"], f"Eggs - {description}", [egg["guild"]])
+            self.slash.add_slash_command(eggcoro, egg["name"], f"Eggs - {description}", [int(egg["guild"])])
 
         await self.slash.sync_all_commands()
     
@@ -58,7 +57,7 @@ class Eggs(commands.Cog):
                 eggs: list = await response.json()
         
                 for egg in eggs:
-                    if egg["guild"] == guild.id:
+                    if int(egg["guild"]) == guild.id:
                         name = egg["name"]
                         await session.delete(f"https://eggsapi.xyz/api/eggs/{name}")
 
@@ -68,13 +67,12 @@ class Eggs(commands.Cog):
             async with session.get("https://eggsapi.xyz/api/eggs/random") as response:
                 egg = await response.json()
                 name = egg["name"]
-                user = await self.bot.fetch_user(egg["uploader"])
-                guild = self.bot.get_guild(egg["guild"])
+                guild = int(egg["guild"])
                 botver = egg["botver"]
                 desc = egg["desc"]
                 pic = egg["pic"]
 
-        e = discord.Embed(title=f"The \"{name}\" Egg", color=int(self.embed["color"], 16), description=f"**Uploaded by `{str(user)} ({user.id})` from `{guild.name}` with `{botver}`.**\n\"{desc}\"")
+        e = discord.Embed(title=f"The \"{name}\" Egg", color=int(self.embed["color"], 16), description=f"**Uploaded from `{guild.name}` with `{botver}`.**\n\"{desc}\"")
         e.set_author(name=self.embed["author"] + "Eggs", icon_url=self.embed["icon"])
         e.set_image(url=pic)
         e.set_footer(text=self.embed["footer"], icon_url=self.embed["icon"])
@@ -92,7 +90,6 @@ class Eggs(commands.Cog):
         async with aiohttp.ClientSession(headers={"auth": self.token["eggs"]}) as session:
             await session.post("https://eggsapi.xyz/api/eggs", json={
                 "name": name,
-                "uploader": ctx.author.id,
                 "guild": ctx.guild.id,
                 "botver": self.bot.version,
                 "desc": description,
@@ -135,7 +132,6 @@ class Eggs(commands.Cog):
         await self.template(
             ctx,
             "seggs",
-            self.bot.get_user(450678229192278036),
             self.bot.get_guild(832594030264975420),
             "https://eggs.hexa.blue/images/seggs.png"
         )
@@ -145,7 +141,6 @@ class Eggs(commands.Cog):
         await self.template(
             ctx,
             "hardboiled",
-            self.bot.get_user(450678229192278036),
             self.bot.get_guild(832594030264975420),
             "https://nomnompaleo.com/wp-content/uploads/2011/07/Perfect-Hard-Boiled-Eggs.jpg"
         )
@@ -155,7 +150,6 @@ class Eggs(commands.Cog):
         await self.template(
             ctx,
             "softboiled",
-            self.bot.get_user(450678229192278036),
             self.bot.get_guild(832594030264975420),
             "https://www.yeprecipes.com/data/thumbnails/15/soft-boiled-egg2.jpg"
         )
@@ -165,7 +159,6 @@ class Eggs(commands.Cog):
         await self.template(
             ctx,
             "scrambled",
-            self.bot.get_user(450678229192278036),
             self.bot.get_guild(832594030264975420),
             "https://southernbite.com/wp-content/uploads/2021/05/Perfect-Scrambled-Eggs-3.jpg"
         )
@@ -175,7 +168,6 @@ class Eggs(commands.Cog):
         await self.template(
             ctx,
             "fried",
-            self.bot.get_user(450678229192278036),
             self.bot.get_guild(832594030264975420),
             "https://www.rainbowcounselling.org.uk/wp-content/uploads/2020/04/fried-eggs-feature.jpg"
         )
