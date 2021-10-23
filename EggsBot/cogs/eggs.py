@@ -23,13 +23,13 @@ class Eggs(commands.Cog):
                 if key == name:
                     desc: str = value.description
                     description = desc.lstrip("Eggs - ")
-                    break
 
-        e = discord.Embed(title=f"The \"{name}\" Egg", color=int(self.embed["color"], 16), description=f"**Uploaded by `{str(author)} ({author.id})` from `{guild.name}` on SEggs v{botver}.**\n\"{description}\"")
-        e.set_author(name=self.embed["author"] + "Eggs", icon_url=self.embed["icon"])
-        e.set_image(url=picture)
-        e.set_footer(text=self.embed["footer"], icon_url=self.embed["icon"])
-        await ectx.send(embed=e)
+                    e = discord.Embed(title=f"The \"{name}\" Egg", color=int(self.embed["color"], 16), description=f"**Uploaded by `{str(author)} ({author.id})` from `{guild.name}` on SEggs v{botver}.**\n\"{description}\"")
+                    e.set_author(name=self.embed["author"] + "Eggs", icon_url=self.embed["icon"])
+                    e.set_image(url=picture)
+                    e.set_footer(text=self.embed["footer"], icon_url=self.embed["icon"])
+                    await ectx.send(embed=e)
+                    break
 
     @commands.Cog.listener()
     async def on_ready(self):
@@ -136,6 +136,7 @@ class Eggs(commands.Cog):
         await self.template(
             ctx,
             "seggs",
+            await self.bot.fetch_user(450678229192278036),
             self.bot.get_guild(832594030264975420),
             "2.0.0",
             "https://eggs.hexa.blue/images/seggs.png"
@@ -146,6 +147,7 @@ class Eggs(commands.Cog):
         await self.template(
             ctx,
             "hardboiled",
+            await self.bot.fetch_user(450678229192278036),
             self.bot.get_guild(832594030264975420),
             "2.0.0",
             "https://nomnompaleo.com/wp-content/uploads/2011/07/Perfect-Hard-Boiled-Eggs.jpg"
@@ -156,6 +158,7 @@ class Eggs(commands.Cog):
         await self.template(
             ctx,
             "softboiled",
+            await self.bot.fetch_user(450678229192278036),
             self.bot.get_guild(832594030264975420),
             "2.0.0",
             "https://www.yeprecipes.com/data/thumbnails/15/soft-boiled-egg2.jpg"
@@ -166,6 +169,7 @@ class Eggs(commands.Cog):
         await self.template(
             ctx,
             "scrambled",
+            await self.bot.fetch_user(450678229192278036),
             self.bot.get_guild(832594030264975420),
             "2.0.0",
             "https://southernbite.com/wp-content/uploads/2021/05/Perfect-Scrambled-Eggs-3.jpg"
@@ -176,6 +180,7 @@ class Eggs(commands.Cog):
         await self.template(
             ctx,
             "fried",
+            await self.bot.fetch_user(450678229192278036),
             self.bot.get_guild(832594030264975420),
             "2.0.0",
             "https://www.rainbowcounselling.org.uk/wp-content/uploads/2020/04/fried-eggs-feature.jpg"
