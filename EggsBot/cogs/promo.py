@@ -34,7 +34,7 @@ class Promo(commands.Cog):
     async def hexablue(self, ctx: interactions.SlashContext):
         e1 = discord.Embed(title="HexaBlue", description="Check out HexaBlue's Bots!")
 
-        e2 = discord.Embed(title="mkbot", description="Can't code, but want a custom Bot anyway? With mkbot, you can create your own Bot for free (with a Premium version that gives additional features)!")
+        e2 = discord.Embed(title="BuildABot", description="Can't code, but want a custom Bot anyway? With BuildABot, you can create your own Bot for free (with a Premium version that gives additional features)!")
         e2.add_field(name="Invite", value="Coming soon!", inline=False)
         e2.add_field(name="Website", value="Coming soon!", inline=False)
 
