@@ -67,6 +67,8 @@ class Eggs(commands.Cog):
 
     @cog_ext.cog_subcommand(base="egg", name="random", description="Eggs - Gets a random Egg from the SEggs API.")
     async def eggrandom(self, ctx: interactions.SlashContext):
+        await ctx.defer(hidden=True)
+
         async with aiohttp.ClientSession() as session:
             async with session.get("https://eggsapi.xyz/api/eggs/random") as response:
                 egg = await response.json()
